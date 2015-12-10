@@ -24,9 +24,9 @@ def send_command(byte):
     print("sending",byte)
     #send a 0 and then shift the whole byte
     GPIO.output(SPIDIO,False)
-    time.sleep(0.0005)
+    time.sleep(0.0000005)
     GPIO.output(SPICLK,True)
-    time.sleep(0.0005)
+    time.sleep(0.0000005)
     GPIO.output(SPICLK,False)
     for i in range(8):
         if((byte>>(7-i))&0b1):
@@ -34,7 +34,7 @@ def send_command(byte):
         else:
             GPIO.output(SPIDIO,False)
         GPIO.output(SPICLK,True)
-        time.sleep(0.0005)
+        time.sleep(0.0000005)
         GPIO.output(SPICLK,False)
 
 #send data
@@ -42,9 +42,9 @@ def send_data(byte):
     print("sending",byte)
     #send a 1 and then shift the whole byte
     GPIO.output(SPIDIO,True)
-    time.sleep(0.0005)
+    time.sleep(0.0000005)
     GPIO.output(SPICLK,True)
-    time.sleep(0.0005)
+    time.sleep(0.0000005)
     GPIO.output(SPICLK,False)
     for i in range(8):
         if((byte>>(7-i))&0b1):
@@ -52,7 +52,7 @@ def send_data(byte):
         else:
             GPIO.output(SPIDIO,False)
         GPIO.output(SPICLK,True)
-        time.sleep(0.0005)
+        time.sleep(0.0000005)
         GPIO.output(SPICLK,False)
 
 def reset_lcd():
@@ -95,13 +95,11 @@ send_data(0x7)
 send_data(0x70)
 
 send_command(0x5C)
-for i in range(200):
-    send_data(0xF0)
-    send_data(0x00)
-    send_data(0xF0)
-    send_data(0x00)
-    send_data(0xF0)
-    send_data(0x00)
+for i in range(1000):
+    send_data(0x0F)
+    send_data(0x0F)
+    send_data(0x0F)
+    send_data(0x0F)
 
     
 GPIO.cleanup()
